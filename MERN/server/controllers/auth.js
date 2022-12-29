@@ -4,7 +4,7 @@ const jwt = require('../utils/jwt.js')
 const { msg } = require('../msg/msg.js');
 
 function register(req, res) {
-    const {firstname, lastname, email, password} = req.body;
+    const {firstname, lastname, email, password, active} = req.body;
 
     if (!email) { 
         res.status(400).send({msg: "Email obligatorio"})
@@ -19,7 +19,7 @@ function register(req, res) {
         email: email.toLowerCase(),
         password,
         role: "user",
-        active: false
+        active: active
     });
 
     const salt = bcrypt.genSaltSync(10);
@@ -42,7 +42,7 @@ function login(req, res) {
     if(!email) res.status(400).send({msg: "Email obligatorio."})
     if(!password) res.status(400).send({msg: "Password obligatorio."})
 
-    const emailLowerCase = email.toLowerCase();
+    const emailLowerCase = email.toLowerCase();  // CONVERTIR TODO A MINISCULAS
 
     User.findOne({email: emailLowerCase}, (error, userStore) => {
         if(error) {
