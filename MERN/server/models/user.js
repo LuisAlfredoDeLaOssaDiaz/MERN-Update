@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const bcrypt = require('bcryptjs');
 
 const UserSchema = mongoose.Schema ({
-    fistname: {type: String, required: false},
+    firstname: {type: String, required: false},
     lastname: {type: String},
     email: {type: String, required: true, unique: true},
     password: {type: String, require: true},
@@ -10,4 +11,5 @@ const UserSchema = mongoose.Schema ({
     avatar: {type: String}
 });
 
-module.exports = mongoose.model("User", UserSchema);
+
+module.exports = mongoose.model("User", UserSchema)

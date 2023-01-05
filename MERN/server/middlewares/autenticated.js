@@ -15,12 +15,12 @@ function asureAuth(req,res,next) {
         const currentData = new Date().getTime();
 
         if (exp <= currentData) {
-            msg(res,400, "El token ha expirado")
+            return msg(res,400, "El token ha expirado")
         }
         req.user = payload;
         next();
     } catch (error) {
-        msg(res,400,"Token invalido.")
+        return msg(res,400,"Token invalido.")
     }
 
 }

@@ -5,7 +5,7 @@ const { msg } = require('../msg/msg.js');
 
 function register(req, res) {
     const {firstname, lastname, email, password, active} = req.body;
-
+    
     if (!email) { 
         res.status(400).send({msg: "Email obligatorio"})
     }
@@ -29,44 +29,51 @@ function register(req, res) {
 
     user.save((error, userStorage) => {
         if (error) {
-            res.status(400).send({msg: "Error al crear usuario"});
+            return msg(res, 400, "Error al crear usuario");
         }
         else {
-            res.status(200).send(userStorage);
+            return msg(res, 200, [user, userStorage]);
         }
     })
 }
 
 function login(req, res) {
     const {email, password} = req.body
-    if(!email) res.status(400).send({msg: "Email obligatorio."})
-    if(!password) res.status(400).send({msg: "Password obligatorio."})
-
+    if(!email) {
+        return res.status(400).send({msg: "Email obligatorio."})
+    }
+    if(!password) {
+        return res.status(400).send({msg: "Password obligatorio."})
+    }
+    
     const emailLowerCase = email.toLowerCase();  // CONVERTIR TODO A MINISCULAS
-
+    
     User.findOne({email: emailLowerCase}, (error, userStore) => {
-        if(error) {
-            msg(res, 400, "Error del servidor.")
-        } else {
-
+        try {
             bcrypt.compare(password, userStore.password, (bcryptError, check) => {
                 if (bcryptError) {
-                    msg(res, 500, "server error.")
+                    return msg(res, 500, "server error.")
                 } else if(!check) {
-                    msg(res, 400, "Contraseña incorrecta.")
+                    return msg(res, 400, "Contraseña incorrecta.")
                     
                 } else if (!userStore.active) {
-                    msg(res, 401, "Usuario no Autorizado.");
+                    return msg(res, 401, "Usuario no Autorizado.");
                     
                 } else {
-                    res.status(200).send({
+                    return msg(res,200,{
                         access: jwt.createAccessToken(userStore),
                         refresh: jwt.createRefreshToken(userStore)
                     })
                 }
             })
-
+            
+        } catch (error) {
+            console.log(error);
+            return msg(res, 400, "Error del servidor.")
         }
+        // if(error) {
+        // } else {
+        // }
     });
 }
 
