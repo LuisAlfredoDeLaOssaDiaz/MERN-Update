@@ -8,7 +8,10 @@ const app = express();
 // Import routings
 const authRoutes = require('./router/auth.js');
 const userRoutes = require('./router/user.js');
-const menuRouter = require('./router/menu.js')
+const menuRoutes = require('./router/menu.js');
+const courseRoutes = require('./router/course.js');
+const postRoutes = require("./router/post");
+const newsletterRoutes = require("./router/newsletter");
 
 // Configure Body parser --- ########### --- sirve para resivir o enviar JSON
 app.use(bodyParser.urlencoded({extended: true}));
@@ -24,6 +27,9 @@ app.use(cors());
 // Configure routings
 app.use(`/api/${API_VERSION}`,authRoutes);
 app.use(`/api/${API_VERSION}`,userRoutes);
-app.use(`/api/${API_VERSION}`,menuRouter);
+app.use(`/api/${API_VERSION}`,menuRoutes);
+app.use(`/api/${API_VERSION}`,courseRoutes);
+app.use(`/api/${API_VERSION}`,postRoutes);
+app.use(`/api/${API_VERSION}`,newsletterRoutes);
 
 module.exports = app;
