@@ -29,7 +29,7 @@ function getPosts(req, res) {
         limit: parseInt(limit),
         sort: {created_at: "desc"}
     }
-
+    
     Post.paginate({}, options, (error, postStored) => {
         if (error) {
             msg(res, 400, "Error al obtener los post.");
