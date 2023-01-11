@@ -1,11 +1,15 @@
 import { Tab } from "semantic-ui-react";
+import { RegisterForm } from "../../../components/Admin/Auth"
+import { LoginForm } from "../../../components/Admin/Auth/LoginForm/LoginForm";
 
-export const panes = [
+
+export function fpanes(openLogin) {
+  const panes = [
     {
       menuItem: "Entrar",
       render: () => (
         <Tab.Pane>
-          <h2>Login FORM</h2>
+          <LoginForm />
         </Tab.Pane>
       )
     },
@@ -13,8 +17,11 @@ export const panes = [
       menuItem: "Nuevo Usuario",
       render: () => (
         <Tab.Pane>
-          <h2>Register FORM</h2>
+          <RegisterForm openLogin={openLogin} />
         </Tab.Pane>
       )
     }
   ]
+
+  return panes
+}
