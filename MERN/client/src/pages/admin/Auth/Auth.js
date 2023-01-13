@@ -7,7 +7,7 @@ import { fpanes } from "./panes"
 import PruebaButton from '../../../PruebaButton';
 
 function Auth() {
-  const [activeIndex, setActiveIndex] = useState(1)
+  const [activeIndex, setActiveIndex] = useState(0)
   const openLogin = () => setActiveIndex(0)
   return (
     <div className="auth">

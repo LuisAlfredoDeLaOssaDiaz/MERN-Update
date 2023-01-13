@@ -19,7 +19,7 @@ function register(req, res) {
         email: email.toLowerCase(),
         password,
         role: "user",
-        active: active
+        active: false
     });
 
     const salt = bcrypt.genSaltSync(10);

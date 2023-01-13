@@ -48,7 +48,6 @@ function createUser(req, res) {
         console.log(imagePath);
         user.avatar = imagePath;
     }
-     
 
     user.save((err, userStored)=> {
         if (err) {
