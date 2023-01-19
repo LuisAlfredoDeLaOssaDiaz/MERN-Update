@@ -1,7 +1,8 @@
 import { useState, useEffect, createContext} from "react";
-import { User } from "../api";
+import { Auth, User } from "../api";
 
 const userController = new User();
+const authController = new Auth();
 
 export const AuthContext = createContext();
 
@@ -9,9 +10,18 @@ export function AuthProvider(props) {
     const { children } = props;
     const [user, setUser] = useState(null)
     const [token, setToken] = useState(null)
+    const [loading, setLoading] = useState(true)
         
     useEffect(()=> {
        // Comprobar si el usuario está logueado
+       (async _ => {
+        const accessToken = authController.getAccessToken();
+        const refreshToken = authController.getAccessToken();
+
+        await login(accessToken)
+
+        setLoading(false);
+       })()
     }, [] )
 
     const login = async (accessToken) => {
@@ -30,7 +40,8 @@ export function AuthProvider(props) {
         login
     }
 
-    return <AuthContext.Provider value={data}> {children} </AuthContext.Provider>
+    if (loading) return null;
 
+    return <AuthContext.Provider value={data}> {children} </AuthContext.Provider>
 }
 
