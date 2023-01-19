@@ -38,6 +38,7 @@ export class Auth {
             };
 
             const response = await fetch(url, params);
+            
             const result = await response.json();
             if (response.status !== 200) { throw result; }
             return result;
@@ -45,4 +46,26 @@ export class Auth {
             throw error
         }
     }
+
+    setAccessToken(token) {
+        localStorage.setItem( ENV.JWT.ACCESS, token )
+    }
+
+    getAccessToken() {
+        return localStorage.getItem(ENV.JWT.ACCESS)
+    }
+
+    setRefreshToken(token) {
+        localStorage.setItem( ENV.JWT.REFRESH, token )
+    }
+
+    getRefreshToken() {
+        return localStorage.getItem(ENV.JWT.REFRESH)
+    }
+
+    removeTokens() {
+        localStorage.removeItem(ENV.JWT.ACCESS)
+        localStorage.removeItem(ENV.JWT.REFRESH)
+    }
+
 }

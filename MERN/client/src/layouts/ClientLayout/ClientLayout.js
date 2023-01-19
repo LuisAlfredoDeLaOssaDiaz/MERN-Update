@@ -3,6 +3,7 @@ import PruebaButton from '../../PruebaButton';
 
 export function ClientLayout(props) {
     const {children} = props;
+    
   return (
     <div>
       <PruebaButton ruta='admin' />

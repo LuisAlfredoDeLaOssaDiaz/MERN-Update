@@ -1,18 +1,20 @@
-import React from 'react'
-import {Routes, Route} from "react-router-dom"
-import {Auth, Users, Blog, Courses, Menu, Newsletter} from "../pages/admin"
-import { AdminLayout } from "../layouts"
-
-const user = null
+import React from 'react';
+import {Routes, Route} from "react-router-dom";
+import {Auth, Users, Blog, Courses, Menu, Newsletter} from "../pages/admin";
+import { AdminLayout } from "../layouts";
+import { useAuth } from '../hooks';
 
 export function AdminRouter() {
-    const loadLayout = (Layout, Page) => {
-      return (
-        <Layout>
-          <Page />
-        </Layout>
-      )
-    }
+  
+  const { user } = useAuth();
+  
+  const loadLayout = (Layout, Page) => {
+    return (
+      <Layout>
+        <Page />
+      </Layout>
+    )
+  }
     
   return (
     <div>
