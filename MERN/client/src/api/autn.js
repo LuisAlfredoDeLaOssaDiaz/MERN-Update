@@ -47,6 +47,31 @@ export class Auth {
         }
     }
 
+    async refreshAccesToken(refreshToken) {
+        try {
+            const url = `${this.baseApi}/${ENV.API_ROUTES.REFRESH_ACCES_TOKEN}`;
+            const params = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    token: refreshToken,
+                }),
+            };
+
+            const response = await fetch(url, params);
+            const result_ = await response.json();
+            const { msg: result } = result_;
+
+            if (response.status !== 200) throw result;
+
+            return result
+         } catch (error) {
+            throw error;
+        }
+    }
+
     setAccessToken(token) {
         localStorage.setItem( ENV.JWT.ACCESS, token )
     }

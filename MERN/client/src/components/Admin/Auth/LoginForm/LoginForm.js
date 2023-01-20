@@ -21,7 +21,7 @@ export function LoginForm() {
       try {
         const response_ = await authController.login(formValue);
         const { msg: response } = response_;
-        console.log(response);
+        
         authController.setAccessToken(response.access)
         authController.setRefreshToken(response.refresh)
         

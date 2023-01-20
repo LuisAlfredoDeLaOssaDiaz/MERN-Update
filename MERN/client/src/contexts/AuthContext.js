@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext} from "react";
 import { Auth, User } from "../api";
+import { hasExpiredToken } from "../utils";
 
 const userController = new User();
 const authController = new Auth();
@@ -13,16 +14,44 @@ export function AuthProvider(props) {
     const [loading, setLoading] = useState(true)
         
     useEffect(()=> {
-       // Comprobar si el usuario está logueado
-       (async _ => {
-        const accessToken = authController.getAccessToken();
-        const refreshToken = authController.getAccessToken();
+        // Comprobar si el usuario está logueado
+        (async ()=> {
+            const accessToken = authController.getAccessToken() ;
+            const refreshToken = authController.getRefreshToken() ;
 
-        await login(accessToken)
-
+            await reLogin(refreshToken);
+            
+            if (!accessToken || !refreshToken) {
+            logout();
+            setLoading(false);
+            return;
+        }
+        
+        if (hasExpiredToken(accessToken)) {
+            // Ha Caducado
+            if (hasExpiredToken(refreshToken)) {
+                logout();
+            } else {
+            }
+        } else {
+            await login(accessToken);
+        }
+        
         setLoading(false);
-       })()
-    }, [] )
+       })();
+    }, [] );
+
+    const reLogin = async (refreshToken) => {
+        try {
+            
+            const {accessToken} = await authController.refreshAccesToken(refreshToken);
+            authController.setAccessToken(accessToken);
+            await login(accessToken);
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const login = async (accessToken) => {
         try {
@@ -34,13 +63,20 @@ export function AuthProvider(props) {
         }
     }
 
+    const logout = () => {
+        setUser(null);
+        setToken(null);
+        authController.removeTokens();
+    }
+
     const data = {
         accessToken: token,
         user,
-        login
+        login,
+        logout
     }
 
-    if (loading) return null;
+    if (loading) return null ;
 
     return <AuthContext.Provider value={data}> {children} </AuthContext.Provider>
 }
