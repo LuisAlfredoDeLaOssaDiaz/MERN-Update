@@ -19,7 +19,6 @@ export function AuthProvider(props) {
             const accessToken = authController.getAccessToken() ;
             const refreshToken = authController.getRefreshToken() ;
 
-            await reLogin(refreshToken);
             
             if (!accessToken || !refreshToken) {
             logout();
@@ -28,10 +27,13 @@ export function AuthProvider(props) {
         }
         
         if (hasExpiredToken(accessToken)) {
+            console.log("access");
             // Ha Caducado
             if (hasExpiredToken(refreshToken)) {
+                console.log("refresh");
                 logout();
             } else {
+                await reLogin(refreshToken);
             }
         } else {
             await login(accessToken);
@@ -39,7 +41,7 @@ export function AuthProvider(props) {
         
         setLoading(false);
        })();
-    }, [] );
+    } ); // [] );
 
     const reLogin = async (refreshToken) => {
         try {

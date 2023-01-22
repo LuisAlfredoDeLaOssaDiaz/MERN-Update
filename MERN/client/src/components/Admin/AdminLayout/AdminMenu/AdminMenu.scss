@@ -1,0 +1,24 @@
+@import "~/src/scss/index.scss";
+
+.ui.menu.admin-menu {
+    > .item {
+        display: flex !important;
+        color: $text-light !important;
+        padding: 15px 20px !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        
+        &:hover,
+        &.active,
+        &.active:hover {
+            color:  $text-light !important;
+            background-color: $primary-hover !important;
+        }
+
+        > i {
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
+
+    }
+}
