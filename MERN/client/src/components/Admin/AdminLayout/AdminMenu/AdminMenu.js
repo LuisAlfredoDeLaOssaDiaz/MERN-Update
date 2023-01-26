@@ -12,11 +12,9 @@ export function AdminMenu() {
 
   const isAdmin = role === "admin";
 
-  console.log("Es Admin?: ", isAdmin);
-
-  const isCurrentPath = (path) => {
+  function isCurrentPath(path) {
     return path === pathname ? true : false;
-  };
+  }
 
   return (
     <Menu fluid vertical icon text className="admin-menu">

@@ -8,8 +8,8 @@ export function Logout() {
     const navigate = useNavigate();
 
     const onLogout = () => {
-        logout();
-        navigate("/admin");
+      logout();
+      navigate("/admin");
     }
     
   return (
