@@ -16,7 +16,7 @@ function Auth() {
 
       <Icon.LogoWhite className="logo" />
       <Tab panes={fpanes(openLogin)} className="auth__forms" activeIndex={activeIndex} onTabChange={(_, data) => setActiveIndex(data.activeIndex)}  />
-    </div>
+    </div> 
   )
 }
 

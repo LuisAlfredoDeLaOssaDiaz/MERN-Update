@@ -17,24 +17,24 @@ export function AdminRouter() {
   }
     
   return (
-    <div>
-      <Routes>
-        {!user ? (
-          <Route path="/admin/*" element={<Auth />} />
-          ) : (
-          <>
-          { ["/admin", "/admin/blog"].map((path) => ( 
-                <Route key={path} path={path} element={loadLayout(AdminLayout, Blog)} />
-              )
+    <>
+    <Routes>
+      {!user ? (
+        <Route path="/admin/*" element={<Auth />} />
+        ) : (
+        <>
+        { ["/admin", "/admin/blog"].map((path) => (
+              <Route key={path} path={path} element={loadLayout(AdminLayout, Blog)} />
             )
-          }
-            <Route path="/admin/users" element={loadLayout(AdminLayout, Users)} />
-            <Route path="/admin/courses" element={loadLayout(AdminLayout, Courses)} />
-            <Route path="/admin/menu" element={loadLayout(AdminLayout, Menu)} />
-            <Route path="/admin/newsletter" element={loadLayout(AdminLayout, Newsletter)} />
-          </>
-        )}
-      </Routes>
-    </div>
+          )
+        }
+          <Route path="/admin/users" element={loadLayout(AdminLayout, Users)} />
+          <Route path="/admin/courses" element={loadLayout(AdminLayout, Courses)} />
+          <Route path="/admin/menu" element={loadLayout(AdminLayout, Menu)} />
+          <Route path="/admin/newsletter" element={loadLayout(AdminLayout, Newsletter)} />
+        </>
+      )}
+    </Routes>
+    </>
   )
 }

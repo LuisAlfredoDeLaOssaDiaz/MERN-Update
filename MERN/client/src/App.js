@@ -6,9 +6,11 @@ import {AuthProvider} from "./contexts"
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <WebRouter />
-        <AdminRouter />
+    <BrowserRouter>
+        {/* <Routes> */}
+          <WebRouter />
+          <AdminRouter />
+        {/* </Routes> */}
       </BrowserRouter>
     </AuthProvider>
   )

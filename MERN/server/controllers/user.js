@@ -10,9 +10,9 @@ async function getMe(req, res) {
     const response = await User.findById(user_id);
     
     if (!response) {
-        msg(res,400, "No se encontro usuario")
+        return msg(res,400, "No se encontro usuario")
     } else {
-        msg(res,200,response)
+        return msg(res,200,response);
     }
 }
  
@@ -27,11 +27,11 @@ async function getUsers(req, res) {
             response = await User.find({active});
         }
     }
-    if (!response[0]) {
-        response = "No hay data en la DB";
-    }
+    // if (!response[0]) {
+    //     response = "No hay data en la DB";
+    // }
 
-    msg(res,200,response)
+    return msg(res,200,response)
 }
 
 function createUser(req, res) {
@@ -43,18 +43,25 @@ function createUser(req, res) {
 
     user.password = hashPassword;
     // console.log(req.files.avatar);
+    
     if (req.files.avatar) {
         const imagePath = image.getFilePath(req.files.avatar)
-        console.log(imagePath);
         user.avatar = imagePath;
+        // console.log(imagePath);
     }
 
     user.save((err, userStored)=> {
         if (err) {
             return msg(res, 500, "Error al guardar usuario")
-        } else if(req.files.avatar) {
-            return msg(res,201,`${userStored}`)
-        }
+        } 
+        // else {
+        //     if (req.files.avatar) {
+        //         const imagePath = image.getFilePath(req.files.avatar)
+        //         console.log(imagePath);
+        //         user.avatar = imagePath;
+        //     }
+        // }
+        return msg(res,201,userStored)
     })
 }
 
@@ -91,9 +98,9 @@ async function deleteUser(req, res) {
 
     User.findByIdAndDelete(id, (error)  => {
         if (error) {
-            msg(res,400,"Error al eliminar.")
+            return msg(res,400,"Error al eliminar.")
         } else {
-            msg(res,200,"Usuario eliminado.")
+            return msg(res,200,"Usuario eliminado.")
         }
     })
 }
