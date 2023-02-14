@@ -17,7 +17,7 @@ export function Users() {
       menuItem: "Usuarios Activos",
       render: () => (
         <Tab.Pane attached={false}>
-          <ListUsers usersActive={true} reload={reload} />
+          <ListUsers usersActive={true} reload={reload} onReload={onReload} />
         </Tab.Pane>
       )
     },
@@ -25,7 +25,7 @@ export function Users() {
       menuItem: "Usuarios Inactivos",
       render: () => (
         <Tab.Pane attached={false}>
-          <ListUsers usersActive={false} reload={reload} />
+          <ListUsers usersActive={false} reload={reload} onReload={onReload} />
         </Tab.Pane>
       )
     }
